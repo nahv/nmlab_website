@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&family=JetBrains+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20261018c">
   <script>
     // Clases antes del primer pintado: sin JS o con movimiento reducido el sitio queda estático y completo.
     (function (d) {
@@ -28,7 +28,9 @@
       if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) c.add('motion');
     })(document);
   </script>
-  <script src="main.js" defer></script>
+  <script src="main.js?v=20261018c" defer></script>
+  <script src="config.js?v=20261018c" defer></script>
+  <script src="form.js?v=20261018c" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Saltar al contenido</a>
@@ -78,7 +80,7 @@
 </svg>
           <!-- mark:end -->
           <div class="baseline"></div>
-          <figcaption class="hero-mark-caption mono"><span>N + M</span><span>tres criterios, una forma</span></figcaption>
+          <figcaption class="hero-mark-caption mono"><span>N + M</span><span>Más criterio = menos costo</span></figcaption>
         </figure>
       </div>
     </section>
@@ -289,11 +291,129 @@
     <!-- ===== Contacto ===== -->
     <section class="contact" id="contacto" aria-labelledby="contacto-title">
       <div class="wrap">
-        <span class="eyebrow mono" data-reveal>06 — Contacto</span>
-        <h2 id="contacto-title" data-reveal data-d="1">¿Tenés un proceso que podría <b>funcionar mejor</b>?</h2>
-        <div class="contact-row">
-          <p data-reveal data-d="2">Contanos en dos líneas qué querés resolver. Te respondemos nosotros, no un formulario automático.</p>
-          <a class="mail" href="mailto:hola@nmlabs.com.ar" data-reveal data-d="3">hola@nmlabs.com.ar</a>
+        <div class="contact-head">
+          <div>
+            <span class="eyebrow mono" data-reveal>06 — Contacto</span>
+            <h2 id="contacto-title" data-reveal data-d="1">¿Tenés un proceso que podría <b>funcionar mejor</b>?</h2>
+          </div>
+          <p data-reveal data-d="2">Cinco preguntas, menos de un minuto. Mientras respondés, armamos tu ficha: lo mismo que hace un sistema con IA bien aplicado, ordenar lo que llega para que alguien pueda actuar.</p>
+        </div>
+
+        <div class="lead" data-reveal>
+          <form class="lead-form" id="lead-form" novalidate autocomplete="on">
+            <div class="lead-progress" aria-hidden="true"><span></span></div>
+            <div class="lead-top mono">
+              <span class="lead-count" aria-hidden="true"><b data-paso-actual>01</b> / 05</span>
+              <span class="lead-saved" data-guardado hidden>Borrador guardado en este navegador</span>
+            </div>
+            <p class="sr-only" aria-live="polite" data-anuncio></p>
+            <!-- Honeypot: los humanos no lo ven. -->
+            <input type="text" name="website" class="lead-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+            <!-- 1 · Organización -->
+            <fieldset class="lead-step is-on" data-paso="1">
+              <legend class="lead-q"><span class="mono">01 · Tu organización</span>¿A qué se dedica?</legend>
+              <div class="opts opts--grid" data-campo="industria"></div>
+              <div class="field" data-otra hidden>
+                <label class="field-label" for="lead-industria-otra">¿Cuál?</label>
+                <input class="input" id="lead-industria-otra" name="industria_otra" type="text" maxlength="120" placeholder="Ej.: cooperativa eléctrica">
+              </div>
+            </fieldset>
+
+            <!-- 2 · Problema -->
+            <fieldset class="lead-step" data-paso="2" hidden>
+              <legend class="lead-q"><span class="mono">02 · El problema</span>¿Qué te gustaría resolver?</legend>
+              <p class="lead-help">Elegí lo que aplique y, si querés, contalo con tus palabras.</p>
+              <div class="chips" data-campo="problemas"></div>
+              <div class="field field--text">
+                <label class="sr-only" for="lead-problema">Contalo con tus palabras</label>
+                <textarea class="input textarea" id="lead-problema" name="problema" rows="3" maxlength="2000" placeholder="Contalo con tus palabras…"></textarea>
+                <button type="button" class="mic" data-accion="dictar" hidden aria-pressed="false">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+                  <span data-mic-txt>Dictar</span>
+                </button>
+              </div>
+              <p class="lead-note" data-aviso-mic role="status" hidden></p>
+            </fieldset>
+
+            <!-- 3 · Tamaño -->
+            <fieldset class="lead-step" data-paso="3" hidden>
+              <legend class="lead-q"><span class="mono">03 · El equipo</span>¿Cuántas personas trabajan ahí?</legend>
+              <div class="opts opts--row" data-campo="tamano"></div>
+            </fieldset>
+
+            <!-- 4 · Quién -->
+            <fieldset class="lead-step" data-paso="4" hidden>
+              <legend class="lead-q"><span class="mono">04 · Vos</span>¿Con quién hablamos?</legend>
+              <div class="fields">
+                <div class="field">
+                  <label class="field-label" for="lead-nombre">Tu nombre</label>
+                  <input class="input" id="lead-nombre" name="nombre" type="text" autocomplete="name" maxlength="120" placeholder="Nombre y apellido">
+                </div>
+                <div class="field">
+                  <label class="field-label" for="lead-organizacion">Organización <span class="opt">opcional</span></label>
+                  <input class="input" id="lead-organizacion" name="organizacion" type="text" autocomplete="organization" maxlength="160" placeholder="Empresa, municipio, estudio…">
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- 5 · Contacto -->
+            <fieldset class="lead-step" data-paso="5" hidden>
+              <legend class="lead-q"><span class="mono">05 · Último paso</span>¿Por dónde te escribimos?</legend>
+              <div class="seg" role="radiogroup" aria-label="Medio de contacto">
+                <label><input type="radio" name="contacto_tipo" value="whatsapp" checked><span>WhatsApp</span></label>
+                <label><input type="radio" name="contacto_tipo" value="email"><span>Email</span></label>
+                <i class="seg-bg" aria-hidden="true"></i>
+              </div>
+              <div class="field">
+                <label class="field-label" for="lead-contacto" data-label-contacto>Tu WhatsApp</label>
+                <input class="input input--lg" id="lead-contacto" name="contacto" type="tel" inputmode="tel" autocomplete="tel" maxlength="160" placeholder="379 412 3456" aria-describedby="lead-error">
+                <p class="lead-error" id="lead-error" role="alert" hidden></p>
+              </div>
+              <p class="lead-legal">Al enviar aceptás que te contactemos por este medio para responder tu consulta. Usamos tus datos sólo para eso (Ley 25.326) y no los compartimos.</p>
+            </fieldset>
+
+            <!-- 6 · Listo -->
+            <div class="lead-step lead-done" data-paso="6" hidden>
+              <svg class="check" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="24"/><path d="M15 27l7 7 15-16"/></svg>
+              <h3 tabindex="-1" data-fin-titulo>Listo.</h3>
+              <p data-fin-mensaje>Te escribimos en las próximas 48 horas con una primera idea concreta.</p>
+              <p class="lead-note mono" data-estado-envio role="status"></p>
+              <button type="button" class="btn btn-ghost btn-sm" data-accion="otra">Cargar otra consulta</button>
+            </div>
+
+            <div class="lead-nav" data-nav>
+              <button type="button" class="btn btn-ghost btn-sm" data-accion="atras" hidden>Atrás</button>
+              <span class="lead-hint mono" data-hint aria-hidden="true">Enter ↵ para seguir</span>
+              <button type="button" class="btn btn-solid" data-accion="siguiente" disabled>Seguir <span class="arrow" aria-hidden="true">→</span></button>
+            </div>
+            <p class="lead-resume mono" data-retomar hidden>Retomamos donde lo dejaste. <button type="button" class="link" data-accion="reiniciar">Empezar de nuevo</button></p>
+          </form>
+
+          <!-- La ficha que se arma mientras respondés -->
+          <aside class="ficha" aria-label="Tu ficha" data-ficha>
+            <button type="button" class="ficha-handle" data-accion="ficha" aria-expanded="false" aria-controls="ficha-body">
+              <span>Tu ficha</span><span class="mono" data-ficha-cuenta>0 de 5</span>
+            </button>
+            <div class="ficha-body" id="ficha-body">
+              <div class="ficha-head mono">
+                <span data-ficha-ref>NM-0000</span>
+                <span class="ficha-state" data-ficha-estado>borrador</span>
+              </div>
+              <dl class="ficha-data">
+                <div data-dato="industria"><dt>Organización</dt><dd>—</dd></div>
+                <div data-dato="problemas"><dt>Quiere resolver</dt><dd>—</dd></div>
+                <div data-dato="tamano"><dt>Equipo</dt><dd>—</dd></div>
+                <div data-dato="quien"><dt>Contacto</dt><dd>—</dd></div>
+              </dl>
+              <div class="ficha-idea" data-ficha-idea hidden>
+                <span class="mono">Primer paso posible</span>
+                <p data-idea-texto></p>
+                <p class="ficha-route mono" data-idea-ruta></p>
+                <span class="ficha-small">Una idea para abrir la charla, no un presupuesto.</span>
+              </div>
+            </div>
+          </aside>
         </div>
       </div>
     </section>
@@ -302,8 +422,9 @@
   <footer class="site-footer">
     <div class="wrap">
       <img src="assets/wordmark.svg" alt="NM Labs" width="168" height="18" loading="lazy">
-      <p class="mono">© 2026 NM Labs · Max &amp; Nahuel · Hecho en Argentina</p>
+      <p class="mono">© 2026 NM Labs · Hecho en Corrientes, Argentina</p>
       <div class="foot-links mono">
+        <a href="nosotros/">Nosotros</a>
         <a href="https://iudex.com.ar" rel="noopener">Iudex</a>
         <a href="#contacto">Contacto</a>
         <a href="#top">Arriba ↑</a>
