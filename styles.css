@@ -202,7 +202,7 @@ b, strong { font-weight: 800; }
   height: 2px; margin-top: 18px; background: var(--ink);
   transform-origin: left; transform: scaleX(1);
 }
-.hero-mark-caption { margin-top: 14px; display: flex; justify-content: space-between; }
+.hero-mark-caption { margin-top: 14px; display: flex; justify-content: flex-end; }
 
 /* Entrada: los tres gatos suben y forman la M. Solo si hay JS y movimiento. */
 .js.motion .hero-mark .cat-inner { transform: translateY(46%); opacity: 0; }
