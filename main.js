@@ -45,7 +45,7 @@
 
   // Arranque cuando están las fuentes (con tope), así la entrada no salta al cambiar de tipografía.
   const ready = () => requestAnimationFrame(() => requestAnimationFrame(() => root.classList.add('is-ready')));
-  Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise((r) => setTimeout(r, 700))]).then(ready);
+  Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise((r) => setTimeout(r, 450))]).then(ready);
 
   /* ---------- Parallax de los tres gatos ---------- */
   const cats = $$('.hero-mark .cat');
