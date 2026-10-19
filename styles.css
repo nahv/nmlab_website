@@ -692,6 +692,7 @@ section { position: relative; }
 }
 .icon-link:hover { border-color: var(--ink); }
 .icon-link svg { width: 16px; height: 16px; }
+.team-note { margin-top: 28px; text-align: center; color: var(--ink-2); font-size: 17px; }
 @media (max-width: 860px) { .profiles { grid-template-columns: 1fr; } }
 @media (max-width: 480px) { .profile { flex-direction: column; gap: 16px; } .profile-avatar { width: 80px; height: 80px; } }
 
